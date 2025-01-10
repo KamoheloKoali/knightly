@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/command";
 import { CommandItem, CommandList } from "cmdk";
 import { useParams, useRouter } from "next/navigation";
+import { DialogTitle } from "../ui/dialog";
 
 interface ServerSearchProps {
   data: {

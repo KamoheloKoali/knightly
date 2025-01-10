@@ -6,8 +6,15 @@ const nextConfig = {
         },
     },
     images: {
-        domains: [
-            "utfs.io",
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "utfs.io",
+            },
+            {
+                protocol: "https",
+                hostname: "9paple0lx4.ufs.sh",
+            },
         ]
     }
 }
