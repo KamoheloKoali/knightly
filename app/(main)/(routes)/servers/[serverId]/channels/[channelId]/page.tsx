@@ -4,32 +4,33 @@ import { ChatMessages } from "@/components/chat/chat-messages";
 import { MediaRoom } from "@/components/media-room";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { redirectToSignIn } from "@clerk/nextjs";
 import { ChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 interface ChannelIdPageProps {
-  params: {
+  params: Promise<{
     serverId: string;
     channelId: string;
-  };
+  }>;
 }
 
 const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
   const profile = await currentProfile();
+  const resolvedParams = await params;
+  const { serverId, channelId } = resolvedParams 
 
   if (!profile) {
-    return redirectToSignIn();
+    return null;
   }
   const channel = await db.channel.findUnique({
     where: {
-      id: params.channelId,
+      id: channelId,
     },
   });
 
   const member = await db.member.findFirst({
     where: {
-      serverId: params.serverId,
+      serverId: serverId,
       profileId: profile.id,
     },
   });

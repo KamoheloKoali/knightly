@@ -23,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModel } from "@/hooks/use-model-store";
+import Link from "next/link";
 
 interface ChatItemProps {
   id: string;
@@ -148,7 +149,7 @@ export const ChatItem = ({
             </span>
           </div>
           {isImage && (
-            <a 
+            <Link 
               href={fileUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -160,19 +161,19 @@ export const ChatItem = ({
                 fill
                 className="object-cover"
               />
-            </a>
+            </Link>
           )}
           {isPDF && (
             <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
               <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
-              <a 
+              <Link 
                 href={fileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
               >
                 {fileUrl}
-              </a>
+              </Link>
             </div>
           )}
           {!fileUrl && !isEditing && (

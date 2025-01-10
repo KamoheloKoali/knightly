@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar";
 import { db } from "@/lib/db";
 import { initialProfile } from "@/lib/initial-profile";
 import { Download } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 const SetupPage = async () => {
   const profile = await initialProfile();
@@ -25,10 +26,10 @@ const SetupPage = async () => {
               <div className=" max-lg:flex-col h-fit lg:h-[80px] flex flex-row items-start lg:items-center mt-3 text-base gap-4 " >
               <button className=" max-w-[300px]  w-auto h-[52px] rounded-full bg-white text-black flex  items-center  hover:text-[#404eed] hover:shadow-2xl px-1 gap-[2px] " >
                 <Download className=" h-4 w-4 sm:w-6  sm:h-6 " />
-                <a href="/#" className="  max-sm:text-xs " >Download for Desktop</a>
+                <Link href="/#" className="  max-sm:text-xs " >Download for Desktop</Link>
               </button>
               <button className="max-w-[300px] w-auto h-[52px] rounded-full bg-black text-center hover:bg-slate-900 hover:shadow-2xl px-1 " >
-                <a href="/sign-in" className=" max-sm:text-xs pr-[4px] sm:pr-[8px] text-white">Open Discord in browser</a>
+                <Link href="/sign-in" className=" max-sm:text-xs pr-[4px] sm:pr-[8px] text-white">Open Discord in browser</Link>
               </button>
               </div>
             </div>
@@ -38,7 +39,7 @@ const SetupPage = async () => {
           <img className="absolute bottom-0 z-0" src="/homeBg.svg" alt="home" />
         </div>
         <div className=" pt-3 cursor-pointer text-slate-400 text-sm font-semibold w-full  text-center" >
-          <a href="https://www.linkedin.com/in/prayansh-parmar/" > Made by Prayansh Parmar</a>
+          <Link href="https://www.linkedin.com/in/prayansh-parmar/" > Made by Prayansh Parmar</Link>
           
         </div>
         

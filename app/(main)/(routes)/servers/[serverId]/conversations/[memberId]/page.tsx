@@ -5,28 +5,32 @@ import { MediaRoom } from "@/components/media-room";
 import { getOrCreateConversation } from "@/lib/conversation";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 interface MemberIdPageProps {
-  params: {
+  params: Promise<{
     memberId: string;
     serverId: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     video?: boolean;
-  };
+  }>;
 }
 const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
   const profile = await currentProfile();
+  const resolvedParams = await params;
+  const { memberId, serverId } = resolvedParams
+
+  const resolvedSearchParams = await searchParams;
+  const { video } = resolvedSearchParams
 
   if (!profile) {
-    return redirectToSignIn();
+    return null;
   }
 
   const currentMember = await db.member.findFirst({
     where: {
-      serverId: params.serverId,
+      serverId: serverId,
       profileId: profile.id,
     },
     include: {
@@ -40,11 +44,11 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
 
   const conversation = await getOrCreateConversation(
     currentMember.id,
-    params.memberId
+    memberId
   );
 
   if (!conversation) {
-    return redirect(`/servers/${params.serverId}`);
+    return redirect(`/servers/${serverId}`);
   }
 
   const { memberOne, memberTwo } = conversation;
@@ -57,17 +61,17 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
       <ChatHeader
         imageUrl={otherMember.profile.imageUrl}
         name={otherMember.profile.name}
-        serverId={params.serverId}
+        serverId={serverId}
         type="conversation"
       />
-      {searchParams.video && (
+      {video && (
         <MediaRoom
           chatId={conversation.id}
           video={true}
           audio={true}
         />
       )}
-      {!searchParams.video && (
+      {!video && (
         <>
           <ChatMessages
             member={currentMember}
