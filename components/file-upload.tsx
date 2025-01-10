@@ -11,7 +11,7 @@ import Link from "next/link";
 interface FileUploadProps {
     onChange: (url?: string) => void;
     value: string;
-    endpoint: "imageUploader"
+    endpoint: "imageUploader" | "messageFile"
 }
 
 export const FileUpload = ({
